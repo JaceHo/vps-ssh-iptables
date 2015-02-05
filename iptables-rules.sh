@@ -70,17 +70,11 @@ ${IPTABLES} -A INPUT -p tcp -m state --state NEW -m tcp --dport 143 -j ACCEPT
 echo " * allowing pop3 on port 110"
 ${IPTABLES} -A INPUT -p tcp -m state --state NEW -m tcp --dport 110 -j ACCEPT
 
-echo " * allowing 7723 shadowsocks forward, input"
-${IPTABLES} -A INPUT -p tcp -m state --state NEW,ESTABLISHED -m tcp --dport 7723 -j ACCEPT
-
 echo " * allowing 3306 mysql input"
 ${IPTABLES} -A INPUT -p tcp -m state --state NEW,ESTABLISHED -m tcp --dport 3306 -j ACCEPT
 
 echo " * allowing ping responses"
 ${IPTABLES} -A INPUT -p ICMP --icmp-type 8 -j ACCEPT
-
-echo " * opening port 7000-9000 for devlop only"
-${IPTABLES} -A INPUT -m state --state NEW -m tcp -p tcp --dport 7000:9000 -j ACCEPT
 
 # DROP everything else and Log it
 ${IPTABLES} -A INPUT -j LOG
