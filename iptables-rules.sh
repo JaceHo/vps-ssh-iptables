@@ -42,6 +42,7 @@ ${IPTABLES} -A INPUT -p tcp --dport 21  -m state --state NEW -j ACCEPT
 
 echo " * allowing dns on port 53 udp"
 ${IPTABLES} -A INPUT -p udp -m udp --dport 53 -j ACCEPT
+${IPTABLES} -A INPUT -p udp -i eth0 --sport 53 -j ACCEPT
 
 echo " * allowing dns on port 53 tcp"
 ${IPTABLES} -A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
