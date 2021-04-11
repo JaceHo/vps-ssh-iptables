@@ -30,9 +30,14 @@ echo " * prevent sync-flood attack"
 ${IPTABLES} -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 
 ## BLOCK ABUSING IPs HERE ##
-#echo " * BLACKLIST"
-#${IPTABLES} -A INPUT -s _ABUSIVE_IP_ -j DROP
-#${IPTABLES} -A INPUT -s _ABUSIVE_IP2_ -j DROP
+# echo " * BLACKLIST"
+# ${IPTABLES} -A INPUT -s _ABUSIVE_IP_ -j DROP
+# ${IPTABLES} -A INPUT -s _ABUSIVE_IP2_ -j DROP
+
+## ACCEPT private network IPs HERE ##
+# echo " * WHITELIST"
+# echo " * allowing tcp on port 5050 for ip proxypool"
+# ${IPTABLES} -I INPUT -s 192.168.3.17 -p tcp -m tcp --dport 5050 -j ACCEPT
 
 echo " * allowing ssh on port 22"
 ${IPTABLES} -A INPUT -p tcp --dport 22  -m state --state NEW -j ACCEPT
@@ -86,3 +91,8 @@ ${IPTABLES} -A INPUT -j DROP
 #
 #echo " * SAVING RULES"
 #iptables-save > /etc/sysconfig/iptables
+#
+# Save settings on ubuntu
+#
+echo " * SAVING RULES"
+service iptables save
